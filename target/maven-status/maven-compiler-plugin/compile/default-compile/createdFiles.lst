@@ -1,0 +1,8 @@
+com/saujan/microservices/productservice/dto/ProductResponse.class
+com/saujan/microservices/productservice/Repository/ProductRepository.class
+com/saujan/microservices/productservice/dto/ProductRequest.class
+com/saujan/microservices/productservice/controller/ProductController.class
+com/saujan/microservices/productservice/model/Product.class
+com/saujan/microservices/productservice/service/ProductService.class
+com/saujan/microservices/productservice/ProductServiceApplication.class
+com/saujan/microservices/productservice/model/Product$ProductBuilder.class
