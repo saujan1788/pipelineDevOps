@@ -19,29 +19,18 @@ pipeline {
             }
         }
 
-         stage("Build application") {
-                    steps {
-                        sh "mvn clean package"
-                    }
-                }
-
-         stage("Test Application"){
-            steps{
-             sh "mvn test"
-            }
-         }
-
-
-
-        stage('SonarQube Analysis') {
+        stage("Build application") {
             steps {
-                script {
-                withSonarQubeEnv('sonarQube') {
-                 sh "mvn sonar:sonar -Dsonar.projectKey=product-service -Dsonar.java.binaries=target/classes"
-                 }
-               }
+                sh "mvn clean package"
             }
         }
 
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('sonarQube') {
+                    sh "mvn sonar:sonar -Dsonar.projectKey=product-service -Dsonar.java.binaries=target/classes"
+                }
+            }
+        }
     }
 }
