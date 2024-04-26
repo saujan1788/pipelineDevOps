@@ -37,7 +37,7 @@ pipeline {
             steps {
                 script {
                 withSonarQubeEnv('sonarQube') {
-                 sh "mvn sonar:sonar"
+                 sh "mvn sonar:sonar -Dsonar.projectKey=product-service -Dsonar.java.binaries=target/classes"
                  }
                }
             }
