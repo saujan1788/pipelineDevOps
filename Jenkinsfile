@@ -25,6 +25,13 @@ pipeline {
             }
         }
 
+        post {
+            always {
+                archiveArtifacts artifacts: 'target/**/*', allowEmptyArchive: true
+            }
+        }
+
+
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('sonarQube') {
