@@ -35,9 +35,8 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('Your-Sonar-Env-Here') {
-                    sh "mvn clean verify sonar:sonar -Dsonar.projectKey=product-service -Dsonar.java.binaries=target/classes"
-                }
+
+                sh "mvn sonar:sonar"
             }
         }
 
