@@ -25,19 +25,21 @@ pipeline {
             }
         }
 
-        post {
-            always {
-                archiveArtifacts artifacts: 'target/**/*', allowEmptyArchive: true
-            }
-        }
-
-
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('sonarQube') {
+                    // Assuming this is correctly pointed to the SonarQube environment configured in Jenkins
+                    // This should run after 'mvn clean package' has compiled the Java files
                     sh "mvn sonar:sonar -Dsonar.projectKey=product-service -Dsonar.java.binaries=target/classes"
                 }
             }
+        }
+    }
+
+    post {
+        always {
+            // This will archive the compiled binaries even if the build or analysis fails
+            archiveArtifacts artifacts: 'target/**/*', allowEmptyArchive: true
         }
     }
 }
