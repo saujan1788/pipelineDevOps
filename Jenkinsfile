@@ -18,5 +18,14 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/saujan1788/pipelineDevOps'
             }
         }
+
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('Your-Sonar-Env-Here') {
+                    sh "mvn clean verify sonar:sonar -Dsonar.projectKey=product-service -Dsonar.java.binaries=target/classes"
+                }
+            }
+        }
+
     }
 }
