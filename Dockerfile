@@ -17,6 +17,7 @@ COPY --from=build /home/app/target/*.jar /usr/local/runme/app.jar
 # Expose port 8080
 EXPOSE 8080
 
+ADD target/app.jar app.jar
 # Run the JAR file
 ENTRYPOINT ["java","-jar","/usr/local/runme/app.jar"]
 
