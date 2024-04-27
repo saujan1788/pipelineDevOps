@@ -7,7 +7,7 @@ COPY pom.xml .
 COPY src ./src
 
 # Build the application without running tests to speed up the build
-RUN mvn clean package -DskipTests
+RUN mvn clean package 
 
 # Stage 2: Create the final runtime image
 FROM openjdk:17-oracle
