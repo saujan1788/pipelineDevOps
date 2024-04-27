@@ -1,3 +1,4 @@
+
 pipeline {
     agent any
 
@@ -7,12 +8,6 @@ pipeline {
     }
 
     stages {
-        stage("Clean Workspace") {
-            steps {
-                cleanWs()
-            }
-        }
-
         stage("Checkout from SCM") {
             steps {
                 git branch: 'main', url: 'https://github.com/saujan1788/pipelineDevOps'
@@ -27,8 +22,8 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
+                // 'sonarQube' should match the name configured in Jenkins for SonarQube servers
                 withSonarQubeEnv('sonarQube') {
-                    // No need to specify -Dsonar.projectKey or -Dsonar.java.binaries if they are in sonar-project.properties
                     sh "mvn sonar:sonar"
                 }
             }
