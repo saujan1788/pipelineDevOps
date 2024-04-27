@@ -1,0 +1,48 @@
+package com.saujan.microservices.productservice;
+
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.math.BigDecimal;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import com.saujan.microservices.productservice.dto.ProductRequest;
+import com.saujan.microservices.productservice.dto.ProductResponse;
+import com.saujan.microservices.productservice.model.Product;
+import com.saujan.microservices.productservice.service.ProductService;
+import com.saujan.microservices.productservice.Repository.ProductRepository;
+
+@SpringBootTest
+public class ProductServiceUnitTests {
+
+    @Mock
+    private ProductRepository productRepository;
+
+    @InjectMocks
+    private ProductService productService;
+
+    @BeforeEach
+    void setup() {
+        MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    void shouldCreateProduct() {
+        ProductRequest request = new ProductRequest(null, "iPhone_15", "iPhone 15 is a smartphone from Apple", new BigDecimal(1000));
+        Product product = new Product("1", "iPhone_15", "iPhone 15 is a smartphone from Apple", new BigDecimal(1000));
+
+        when(productRepository.save(any(Product.class))).thenReturn(product);
+
+        ProductResponse response = productService.createProduct(request);
+
+        assertEquals("iPhone_15", response.name());
+        assertEquals(new BigDecimal(1000), response.price());
+    }
+}
