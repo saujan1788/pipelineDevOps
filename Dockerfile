@@ -1,27 +1,23 @@
-# Use the official Maven image to create a build artifact
+# Stage 1: Build the application
 FROM maven:3.8.5-openjdk-17-slim AS build
-
-# Set the working directory in the container
 WORKDIR /home/app
 
-# Copy the source code to the container
+# Copy the POM and source code into the image
+COPY pom.xml .
 COPY src ./src
-COPY pom.xml .git
 
-# Package the application without running tests
+# Build the application without running tests to speed up the build
 RUN mvn clean package -DskipTests
 
-# Use OpenJDK for the runtime image
+# Stage 2: Create the final runtime image
 FROM openjdk:17-oracle
-
-# Set the working directory in the container
 WORKDIR /usr/local/runme
 
-# Copy the JAR from the build stage to the current directory
+# Copy only the built JAR from the build stage to the runtime stage
 COPY --from=build /home/app/target/*.jar ./app.jar
 
-# Expose port 8080
+# Expose port 8080 for the application
 EXPOSE 8080
 
-# Run the JAR file
-ENTRYPOINT ["java","-jar","app.jar"]
+# Define the command to run the application
+ENTRYPOINT ["java", "-jar", "app.jar"]
