@@ -1,4 +1,4 @@
-version: '4'
+version: '3.8'
 services:
   mongodb:
     image: mongo:7.0.5
@@ -11,3 +11,14 @@ services:
       MONGO_INITDB_DATABASE: product-service
     volumes:
       - ./data:/data/db
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: myapp
+    depends_on:
+      - mongodb
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://root:password@mongodb:27017/product-service
